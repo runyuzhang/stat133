@@ -167,7 +167,7 @@ text(x = 1998, y = wr1500m[wr1500m$year == 1998,]$times_accurate, labels = wr150
 # The data frame SO2012Ctry contains this information.
 # It can be loaded into R with
 
-load("~/Dropbox/Sophomore/stat133/assignments/hw2/SummerOlympics2012Ctry.rda")
+load("SummerOlympics2012Ctry.rda")
 
 
 #Q6 Take a look at the variables in this data frame.
@@ -293,7 +293,7 @@ symbols(x = countries_with_metals$longitude, y = countries_with_metals$latitude,
 # and contains information about every athlete who competed 
 # in the Olympics.
 
-# load( )
+load("London2012ALL_ATHLETES.rda")
 
 # There is one observation for each athlete. 
 # (Actually, about 20 athletes have two records if they
