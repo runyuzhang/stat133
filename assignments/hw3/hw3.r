@@ -13,7 +13,7 @@
 # You only need to do that once, so the install command is commented out 
 # here to make sure you don't run it multiple times but make sure to install it once:
 install.packages("ggplot2")
-# library("ggplot2")
+library("ggplot2")
 # And one more package:
 # install.packages("plyr")
 library("plyr")
@@ -195,13 +195,13 @@ qplot(x = SO2012Ctry$pop, y = SO2012Ctry$GDP)
 
 GDP_per_person <- SO2012Ctry$GDP/SO2012Ctry$pop
 SO2012Ctry["GDP_per_person"] <- GDP_per_person
-symbols(SO2012Ctry$pop, GDP_per_person, log = "xy", , xlim=c(1e3, 1e11), ylim=c(1e-2, 1e9),circles = SO2012Ctry$Total)
+symbols(SO2012Ctry$pop, GDP_per_person, log = "xy", xlim=c(1e3, 1e11), ylim=c(1e-2, 1e9),circles = sqrt(SO2012Ctry$Total))
 
 
 # Your ggplot command
-q7 = qplot(SO2012Ctry$pop, GDP_per_person, geom ="point", , size = SO2012Ctry$Total) + scale_y_log10() + scale_x_log10()
+q7 = qplot(SO2012Ctry$pop, GDP_per_person, geom ="point", size = sqrt(SO2012Ctry$Total)) + scale_y_log10() + scale_x_log10()
 # Your ggplot command
-
+q7
 
 # We skip Q8 this time the plot above is already fine.
 # Q8. It appears that the countries with no medals are circles too....
@@ -213,6 +213,8 @@ q7 = qplot(SO2012Ctry$pop, GDP_per_person, geom ="point", , size = SO2012Ctry$To
 
 # Your ggplot command:
 q9 = q7 + labs(title = "GDP per person vs. Population", x = "Population", y = "GDP Per Person")
+top5 = order(SO2012Ctry$Total, decreasing = TRUE)[1:5]
+q9 = q9+annotate("text", x=SO2012Ctry$pop[top5], y=SO2012Ctry$GDP_per_person[top5], label = SO2012Ctry$ISO[top5])
 q9
 ######################################
 # PLOT 3.
@@ -237,7 +239,7 @@ q10
 wonMedal <- SO2012Ctry[SO2012Ctry$Total != 0,]
 
 # Your ggplot commands here.
-q11 = ggplot() +  geom_polygon(data=map_data("world"), aes(x=long, y=lat, group=group), fill = "grey40") + geom_point(colour = "gold", aes(x = wonMedal$longitude, y = wonMedal$latitude, size = wonMedal$Total))
+q11 = ggplot() +  geom_polygon(data=map_data("world"), aes(x=long, y=lat, group=group), fill = "grey40") + geom_point(colour = "gold", aes(x = wonMedal$longitude, y = wonMedal$latitude, size = sqrt(wonMedal$Total)))
 q11
 ## Not needed
 #Q12. Remake the plot and fill ......
