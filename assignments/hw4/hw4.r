@@ -16,7 +16,8 @@
 listLengths <- function(data.list) {
 
     # your code here
-
+    element.lengths = lapply(data.list, FUN = function(x) length(x))
+    return(element.lengths)
 }
 
 #### Function 2
@@ -31,7 +32,11 @@ listLengths <- function(data.list) {
 #              the column names should be : "x", "x^2", "x^3" etc.
 
 powers <- function(x, k){
-
+  x.powers = c(1:k)
+  x.powers = lapply(x.powers, function(y) x^y)
+  x.powers = matrix(unlist(x.powers), ncol = k, byrow = FALSE)
+  colnames(x.powers) = lapply(c(1:k), function(x) ifelse(x == 1, "x", paste("x^", x, sep = "")))
+  return(x.powers)
 }
 
  
@@ -64,7 +69,29 @@ powers <- function(x, k){
 
 # Put your code here
 recipeConversion <- function(recipe){
-
+  if ("amount" %in% colnames(recipe) & "unit" %in% colnames(recipe) & "ingredient" %in% colnames(recipe) & ncol(recipe) == 3){
+    recipe.metrix = data.frame()
+    amountConvert = function(amount, unit){
+      if (unit == "cup" | unit == "cups"){
+        return(c(round(amount * 236.6 / 5, 0) * 5, unit = "ml"))
+      }
+      else if (unit == "oz"){
+        return(c(round(amount * 28.3 / 5, 0) * 5, unit = "gr"))
+      }
+      else{
+        return(c(amount, unit))
+      }
+    }
+    for (i in 1:nrow(recipe)){
+      results = amountConvert(recipe[i,]["amount"],recipe[i,]["unit"])
+      
+      recipe.metrix = rbind(recipe.metrix,data.frame(c(results[1], results[2], recipe[i,]["ingredient"])))
+    }
+    return(recipe.metrix)
+  }
+  else{
+    print("ERROR")
+  }
 }
 
 
@@ -90,7 +117,12 @@ recipeConversion <- function(recipe){
 # -- The bootstrap variance is the sample variance of mu_1, mu_2, ..., mu_B
 
 bootstrapVarEst <- function(x, B){
-
+  means = 1:B
+  for (i in 1:B){
+    means[i] = mean(sample(x, size = length(x), replace = TRUE))
+  }
+  boot.sigma2.est = var(means)
+  return(boot.sigma2.est)
 }
 
 #### Function #4b
@@ -111,8 +143,13 @@ bootstrapVarEst <- function(x, B){
 #     for this reduced sample calculate the sample mean (get mu_1, mu_2, ..., mu_n)
 # -- The jackknife variance is the sample variance of mu_1, mu_2, ..., mu_n
 
-jackknifeVarEst <- fuction(x){
-
+jackknifeVarEst <- function(x){
+  means = 1:length(x)
+  for (i in 1:length(x)){
+    means[i] = mean(x[-i])
+  }
+  jack.sigma2.est = var(means)
+  return(jack.sigma2.est)
 }
 
 #### Function #4c
@@ -127,8 +164,13 @@ jackknifeVarEst <- fuction(x){
 
 # Note: this function calls the previous two functions.
 
-samplingVarEst <- function(  ){
-
+samplingVarEst <- function(x, type = "bootstrap"){
+  if (type == "bootstrap"){
+    return(bootstrapVarEst(x, 1000))
+  }
+  else {
+    return(jackknifeVarEst(x))
+  }
 }
 
 
