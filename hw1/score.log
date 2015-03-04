@@ -1,0 +1,23 @@
+INFO:root:Executed R('load(\'../../instructor/assignments/hw1/hw1-tests.rda\')')
+INFO:root:(2 points) R('all.equal(y, sol$y)')[0] is True
+INFO:root:(2 points) R('all.equal(z, sol$z)')[0] is True
+ERROR:root:(2 points) Checking R('all.equal(z, sol$z1)')[0]
+ERROR:root:... Expecting: True
+ERROR:root:... But got:   20 string mismatches
+ERROR:root:(2 points) Checking R('all.equal(m, sol$m)')[0]
+ERROR:root:... Expecting: True
+ERROR:root:... But got:   Mean relative difference: 1.610828
+ERROR:root:(2 points) Checking R('all.equal(mean.m, sol$mean.m)')[0]
+ERROR:root:... Expecting: True
+ERROR:root:... But got:   Mean relative difference: 1.33229
+ERROR:root:(2 points) Checking R('all.equal(sd.m, sol$sd.m)')[0]
+ERROR:root:... Expecting: True
+ERROR:root:... But got:   Mean relative difference: 0.2614622
+ERROR:root:(2 points) Checking R('all.equal(max.m, sol$max.m)')[0]
+ERROR:root:... Expecting: True
+ERROR:root:... But got:   Mean relative difference: 0.01463633
+INFO:root:(2 points) R('all.equal(bmi, sol$bmi)')[0] is True
+INFO:root:(2 points) R('all.equal(family.men, sol$family.men)')[0] is True
+INFO:root:(2 points) R('all.equal(family.young, sol$family.young)')[0] is True
+INFO:root:(2 points) R('all.equal(family2, sol$family2)')[0] is True
+INFO:root:You got a 12 out of 20.
