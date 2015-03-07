@@ -50,6 +50,7 @@ y = seq(from=2, to=200, by=2)
 z = paste("hw", 1:20, sep = "")
 # Create the variable
 # << m >> : a vector of length 100 with entries from a standard normal distribution
+set.seed(42)
 m = rnorm(100, mean = 0, sd = 1)
 
 # Create the variable
