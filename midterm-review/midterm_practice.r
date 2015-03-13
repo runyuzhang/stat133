@@ -4,33 +4,43 @@
 ## In one R command, create a variable [[ x ]] which is a vector and has
 ## all the even numbers between 2 and 20, in increasing order.
 
+x = seq(2,20,2)
 
 ## In one R command, create a variable [[ y ]] which is a vector and has
 ## all the odd numbers between -1 and -19, in decreasing order
+
+y = seq(-1, -19, -2)
 
 
 ## In one R command, create a variable [[ z ]] which is a vector and has
 ## the numbers 1 through 5, each repeated 4 times, in order (so 1 1 1 1 2 2 2 2 etc.)
 
-
+z = rep(1:5, each = 4)
 ## In one R command, create a variable [[ m ]] that is a 3-by-4 matrix and has
 ## the entries 10, 20, through 120, where the numbers are entered row by row
 ## (so the first row is [ 10 20 30 40 ]).
 
+m = matrix(seq(10, 120, 10), ncol = 4, byrow = T)
 
 ## Create a variable [[ n ]] that is a data frame of dimension 10 x 3
 ## where the first column is the numbers 1-10, the second column the letters a-j and the
 ## third column has T/F, T if the number in column 1 is even, F if the number in column 1 is odd.
 ## Then add the column names :  num, lett, even
 
+n = data.frame(num = 1:10, lett = letters[1:10], even = rep(c("F","T"), 5))
+
 
 ## Create a variable [[ p ]] that is a list and whose elements are x, y, z and m from above.
+
+p = list(x,y,z,m)
 
 
 ## Create a variable [[ nmat ]] that is a matrix of size 100 x 100 and whose
 ## elements are drawn from a Normal distribution with mean 6 and sd 2
 ## Do not remove the set.seed command
 set.seed(42)
+
+nmat = matrix(rnorm(100*100, mean = , sd = 2), nrow = 100)
 
 
 ########################################### SECOND PART
@@ -41,24 +51,34 @@ load("rainfallCO.rda")
 
 ## Extract the type of the variable rain and store in [[ type.rain ]]
 
+type.rain = class(rain)
+
 
 ## Extract the names of the elements in rain and store in  [[ name.stations ]]
+
+name.stations = names(rain)
 
 
 ## In one R command create the variable [[ n.obs ]] , a vector which stores the number
 ## of observations at EACH of the stations in rain
 
+n.obs = lapply(rain, function(x) length(x))
 
 ## In one R command create the variable [[ max.rain ]] which stores the maximum
 ## rainfall for each weather station.
 
+max.rain = lapply(rain, function(x) max(x))
 ## Plot a boxplot that shows the distribution of rainfall at each station
 ## (hint: there should be 5 "boxes" in the boxplot)
+
+boxplot(rain)
 
 ## Make a scatterplot that shows the rainfall at station 1 in year 2000.
 ## Precipitation should go on the y-axis and day on the x-axis
 ## Make new labels for the x- and y-axis.
 ## Hint: the date information is stored in the object day.
+
+plot(day[[1]], rain[[1]] )
 
 ########################################### THIRD PART
 #### Load in the infant data
@@ -74,12 +94,19 @@ fit <- lm(bwt ~ gestation, data=infants)
 ## Add to the plot the line estimated in fit (hint: find the coefficients)
 ## Plot the line in red and put your own x- and y-axis labels on the plot.
 
+plot(bwt ~ gestation, data=infants, xlab='gestation', ylab='bwt')
+abline(a=fit$coef[1], b=fit$coef[2], col='red')
 
 ## Plot a histogram of the fathers' heights (varible dht in the data frame).
+
+hist(infants$dht)
+
 
 ## Create a table which tallies the education level of mothers (varible ed in the data frame)
 ## against the education level of the fathers (variable ded in the data frame).
 ## Store the table in the variable [[ ed.table ]]
+
+ed.table = table(infants$ed, infants$ded)
 
 
 ########################################### FOURTH PART
@@ -87,5 +114,5 @@ fit <- lm(bwt ~ gestation, data=infants)
 ## (i.e. x after subtracting the mean and dividing with the sd)
 
 standardize <- function(x){
-
+  return((x - mean(x, na.rm=FALSE))/sd(x, na.rm=FALSE))
 }

@@ -21,14 +21,14 @@ bml.init <- function(r, c, p){
 
 bml.step <- function(m){
   step_car <- function(m,car){
-    if((car == 1 & ncol(m) == 1) | (car == 2 & nrow(m) == 1)){
+    if((car == 1 & ncol(m) == 1) | (car == 1 & nrow(m) == 1)){
       return(m)
     }
     cars = m*(m==car)
     block = (m!=0)[,c(2:ncol(m), 1)]
     return(cars*block + (cars*!block)[,c(ncol(m), 1:(ncol(m)) - 1)] + m*(m!=car))
   }
-  m_red = t(step_car(m,1))[,c(nrow(m):1)]
+  m_red = t(step_car(m,1))[,c(ncol(m):1)]
 #   browser()
   m_blue = t(step_car(m_red, 2)[,c(nrow(m):1)])
   return(list(m_blue, !all(m_blue==m)))
@@ -50,10 +50,9 @@ bml.sim <- function(r, c, p){
     }
     return(n)
   }
-  num_experiments = 20
+  num_experiments = 100
   n = 500
   list_results = lapply(c(1:num_experiments), function(x) step_n_times(bml.init(r,c,p), n))
-  print(length(which(list_results == n)) / num_experiments)
+  print(length(which(list_results == n)))
   print(mean(unlist(list_results[which(list_results != n)])))
-  return(list(1 - length(which(list_results == n)) / num_experiments, mean(unlist(list_results[which(list_results != n)]))))
 }

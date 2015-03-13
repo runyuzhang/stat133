@@ -2,7 +2,7 @@
 # It will be required to perform the following tasks. The dataset includes data 
 # for houses in the city of Alameda.
 
-
+load("SFHousing-1.rda")
 
 # calculate the mean and median price of houses in Alameda. Store these as the
 # variables <mean.price> and <med.price> respectively.
@@ -10,14 +10,15 @@
 # mean.price <- your code here
 # med.price <- your code here
 
-
+mean.price = mean(housing$price)
+med.price = median(housing$price)
 
 # For each house in the dataset, calculate the absolute difference between its
 # price and the mean price of houses in Alameda. Store this as the variable
 # <price.diffs>. Note that this should be a numeric vector with length equal to
 # the number of observations in the dataset
 
-# price.diffs <- your code here
+price.diffs <- housing$price - mean.price
 
 
 # The variable br indicates the number of bedrooms in each house. Please create
@@ -26,8 +27,8 @@
 # 1) houses with more than 3 rooms <housing.large>
 # 2) houses with up to and including 3 rooms  <housing.small>
 
-# housing.large <- your code here
-# housing.small <- your code here
+housing.large <- housing[housing$br > 3,]
+housing.small <- housing[housing$br <= 3,]
 
 
 
@@ -35,8 +36,8 @@
 # For each of your subsets, create a vector giving the price of each house. Name
 # these variables <housing.large.price> and <housing.small.price>.
 
-# housing.large.price <- your code here
-# housing.small.price <- your code here
+housing.large.price <- housing.large$price
+housing.small.price <- housing.small$price
 
 
 
@@ -54,6 +55,7 @@
 sqftByPrice <- function(price.cutoff, prices, lsqft) {
 
     # your code here
+  return(mean(lsqft[price.cutoff > prices]))
 
 }
 
@@ -64,3 +66,5 @@ sqftByPrice <- function(price.cutoff, prices, lsqft) {
 # 2) a red line with intercept=169500 and slope=275
 # 3) plotting character set to 20
 
+plot(housing$bsqft, housing$price, main = "Housing price vs Building sqft", pch = 20)
+abline(169500, 275, col = "red")
