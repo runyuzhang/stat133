@@ -5,19 +5,19 @@
         "hw1": {
             "note": "", 
             "hash": "43d3afca22b3058ca77ec23cca36bec0d6bb7efc", 
-            "earned": 20, 
+            "earned": 12, 
             "possible": 20, 
             "penalty": 0, 
             "parts": {
                 "hw1": {
                     "possible": 20, 
-                    "earned": 20
+                    "earned": 12
                 }
             }
         }
     }, 
     "login": "runyuzhang", 
     "name": "Runyu Zhang", 
-    "status": "enrolled", 
+    "status": "unenrolled", 
     "url": "git@github.com:runyuzhang/stat133.git"
 }
