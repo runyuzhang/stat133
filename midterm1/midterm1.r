@@ -2,20 +2,22 @@
 # required to perform the following tasks. The dataset includes data for countries in 2012.
 
 # your code here
+
 load("SummerOlympics2012Ctry.rda")
+
 
 # calculate the mean and the maximum of GDP in the dataset. Store these as the
 # variables <mean.GDP> and <max.GDP> respectively.
 
+
 mean.GDP <- mean(SO2012Ctry$GDP)
 max.GDP <- max(SO2012Ctry$GDP)
-
-
 
 # For each country in the dataset, calculate the number of female athletes (Female) divided
 # by the total number of athletes (Female + Male). Store this as the variable
 # <female.prop>. Note that this should be a numeric vector with length equal to
 # the number of observations in the dataset.
+
 
 female.prop <- SO2012Ctry$Female / (SO2012Ctry$Female + SO2012Ctry$Male)
 
@@ -27,18 +29,17 @@ female.prop <- SO2012Ctry$Female / (SO2012Ctry$Female + SO2012Ctry$Male)
 # 1) Countries with 0 bronze medals: <subset.nobronze>
 # 2) Countries with more than or exactly 3 bronze medals: <subset.threebronze>
 
+
 subset.nobronze <- SO2012Ctry[SO2012Ctry$Bronze == 0, ]
 subset.threebronze <- SO2012Ctry[SO2012Ctry$Bronze >= 3, ]
-
-
 
 
 # For each of your subsets, create a vector giving the population size. Store
 # these as variables <subset.nobronze.pop> and <subset.threebronze.pop>.
 
+
 subset.nobronze.pop <- subset.nobronze$pop
 subset.threebronze.pop <- subset.threebronze$pop
-
 
 
 
@@ -68,7 +69,7 @@ medpopByGDPPP <- function(GDPPP.cutoff, GDPPP, pop){
 # 3) plotting character set to 10
 # 4) a red horizontal line at female proportion of 0.50.
 
+
 plot(x = SO2012Ctry$Female + SO2012Ctry$Male, y = female.prop, main = "Proportion of female athletes vs Total # athletes", xlab = "Total # athletes", ylab = "Proportion of female athletes", pch = 10)
 abline(col = "red", a = 0.5, b = 0)
-
 
