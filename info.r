@@ -1,5 +1,0 @@
-name = "Runyu Zhang"
-SID = "24823960"
-email = "runyuzhang@berkeley.edu"
-github_name = "runyuzhang"
-status = "enrolled"
