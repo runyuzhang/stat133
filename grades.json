@@ -5,13 +5,26 @@
         "hw1": {
             "note": "", 
             "hash": "43d3afca22b3058ca77ec23cca36bec0d6bb7efc", 
-            "earned": 12, 
+            "earned": 20, 
             "possible": 20, 
             "penalty": 0, 
             "parts": {
                 "hw1": {
                     "possible": 20, 
-                    "earned": 12
+                    "earned": 20
+                }
+            }
+        }, 
+        "hw4": {
+            "note": "", 
+            "hash": "58d09af3ec0584825a553864741ae597a9cc1b1a", 
+            "earned": 14, 
+            "possible": 20, 
+            "penalty": 0, 
+            "parts": {
+                "hw4": {
+                    "possible": 20, 
+                    "earned": 14
                 }
             }
         }
