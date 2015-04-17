@@ -158,7 +158,8 @@ speechToWords = function(sentences) {
   sentences = tolower(gsub("[0-9]+s*", "", sentences))
     
   # Drop the words (Applause. and Laughter.)
-  # <your code here>
+  sentences = gsub("\\[applause\\]", "", sentences)
+  sentences = gsub("\\[lpplause\\]", "", sentences)
 
   # Split the text up by blanks and punctuation  (hint: strsplit, unlist)
   # <your code here>
@@ -189,7 +190,7 @@ speechWords <- sapply(speechesL, speechToWords)
 # then create:
 # [uniqueWords] : a vector with every word that appears in the speeches in alphabetic order
 
-uniqueWords <- table(unlist(speechWords))
+uniqueWords <- sort(unique(unlist(speechWords)))
 
 # I get 12965 unique words when I run my code - if you don't try to check that all preceeding
 # steps were ok.  Keep the line below in the code, if you get a different number of
@@ -226,7 +227,15 @@ names(emptyVec) = uniqueWords
 # wordVecs <- <your code here>
 
 # Create a matrix out of wordVecs:
-# wordMat <- <your code here>
+wordVecs = lapply(speechWords, function(x){
+  counts = table(x)
+  temp = emptyVec
+  temp[names(counts)] = counts
+  return(temp)
+})
+
+
+wordMat = matrix(unlist(wordVecs), ncol=length(wordVecs), byrow=FALSE)
 
 # Load the dataframe [speechesDF] which has two variables,
 # president and party affiliation (make sure to keep this line in your code):
@@ -241,12 +250,15 @@ names(emptyVec) = uniqueWords
 # chars - number of letters in the speech (use [speechWords] to calculate)
 # sent - number of sentences in the speech (use [speechesL] to calculate this)
 
-words <- <your code here>
-chars <- <your code here>
-sentences <- <your code here>
+words <- sapply(speechWords, length)
+chars <- sapply(speechWords, function(x) sum(nchar(x)))
+sentences <- sapply(speechesL, length)
 
 # Update the data frame
-speechesDF <- <your code here>
+speechesDF$words = words
+speechesDF$chars = chars
+speechesDF$sentences = sentences
+
 
 ######################################################################
 ## Create a matrix [presidentWordMat] 
@@ -255,7 +267,15 @@ speechesDF <- <your code here>
 
 # note that your code will be a few lines...
   
-presidentWordMat <- <your code here> 
+pres = unique(speechesDF$Pres)
+counts = sapply(pres, function(x) sum(speechesDF[speechesDF$Pres == x,]$words))
+presidentWordMat = matrix(counts, nrow = 1)
+
+presidentWordMat = sapply(unique(presidents), function(i){
+  if (length(wordMat[, presidents==i])==no.uniqueWords)
+    return (wordMat[,presidents==i])
+  return(rowSums(wordMat[,presidents==i]))
+})
   
 # At the beginning of this file we sourced in a file "computeSJDistance.R"
 # It has the following function:
@@ -269,19 +289,23 @@ presidentWordMat <- <your code here>
 # [docFreq]: vector of the same length as [uniqueWords], 
 # count the number of presidents that used the word
 
-  docFreq <- <your code here>
+  pres.speeches = sapply(unique(speechesDF$Pres), function(y) which(speechesDF$Pres == y))
+
+  docFreq <- sapply(1:length(uniqueWords), function(x) sum(sapply(pres.speeches, function(y)
+    ifelse(sum(wordMat[x, y]) > 0, 1, 0
+    ))))
     
 # Call the function computeSJDistance() with the arguments
 # presidentWordMat, docFreq and uniqueWords
 # and save the return value in the matrix [presDist]
 
-presDist <- computeSJDistance( < insert arguments here >)
+presDist <- computeSJDistance(tf=presidentWordMat, df=docFreq, terms=uniqueWords)
 
 ## Visuzlise the distance matrix using multidimensional scaling.
 # Call the function cmdscale() with presDist as input.
 # Store the result in the variable [mds] by 
 
-mds <- <your code here>
+mds <- cmdscale(presDist)
 
 # First do a simple plot the results:
 plot(mds)
@@ -295,11 +319,11 @@ plot(mds)
 # is the party affiliation and the names attribute has the names of the presidents.
 # Hint: the info is in speechesDF$party and speechesDF$Pres
 
-presParty <- <your code here>
+presParty <- tapply(speechesDF$party, speechesDF$Pres, function(x) x[1])
   
 # use rainbow() to pick one unique color for each party (there are 6 parties)
 
-cols <- <your code here>
+cols <- rainbow(length(unique(speechesDF$party)))
 
 # Now we are ready to plot again.
 # First plot mds by calling plot() with type='n' (it will create the axes but not plot the points)
@@ -307,8 +331,9 @@ cols <- <your code here>
 # then call text() with the presidents' names as labels and the color argument
 # col = cols[presParty[rownames(presDist)]]
   
-plot(<your code here>)
-text(<your code here>)
+plot(mds, type = "n", xlab = "", ylab = "", main="Presidents")
+text(mds, rownames(presDist), col = cols[presParty[rownames(presDist)]])
+
 
 ### Use hierarchical clustering to produce a visualization of  the results.
 # Compare the two plots.
@@ -323,8 +348,11 @@ plot(hc)
 # x-axis: speech year, y-axis: average word length (char/word)
 # x-axis: speech year, y-axis: average sentence length (word/sent)
 
-# your plot statements below:
-
+plot(speechesDF$year, speechesDF$sent, xlab="Year", ylab="#sentences")
+plot(speechesDF$year, speechesDF$word, xlab="Year", ylab="#words")
+plot(speechesDF$year, speechesDF$char, xlab="Year", ylab="#characters")
+plot(speechesDF$year, speechesDF$char/speechesDF$word, xlab="Year", ylab="ave word length")
+plot(speechesDF$year, speechesDF$word/speechesDF$sent, xlab="Year", ylab="ave sentence length")
 
 
 
