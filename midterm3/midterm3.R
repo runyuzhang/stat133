@@ -9,6 +9,9 @@
 #   <num.star>: an integer indicating how many elements of <chvec> contain the "*"
 #     symbol. For example: numStarElements(c('star', 'st*r', '***')) should return 2
 
+numStarElements = function(chvec){
+  return(length(grep("\\*", chvec)))
+}
 
 
 # Write a function called numDigits that counts the number of (single) digits in
@@ -19,6 +22,9 @@
 # and return the following
 #   <total>: A single number (the number of digits in chvec)
 
+numDigits = function(chvec){
+  return(length(grep("[0-9]", unlist(strsplit(chvec, "")))))
+}
 
 
 # Some test cases:
@@ -37,10 +43,17 @@
 # and return
 #   <theirchvec>: The same character vector with the required substitutions.
 
+hisToTheir = function(chvec){
+  theirchvec = gsub("\\bhim\\b", "them", chvec)
+  theirchvec = gsub("\\bhis\\b", "their", theirchvec)
+  theirchvec = gsub("\\bhe\\b", "they", theirchvec)
+  return(theirchvec)
+}
+
 #A test case
 all.equal(
   hisToTheir("he went to the store his mother gave him"), 
-  "she went to the store her mother gave her"
+  "they went to the store their mother gave them"
 )
 
 
@@ -57,3 +70,9 @@ all.equal(
 #  <letter> The most common letter or letters in the string.
 # For example mostCommonLetter("aabbccccdddd") should return 
 # [1] "c" "d"
+
+mostCommonLetter = function(chvec){
+  counts = table(strsplit(chvec, ""))
+  mostCommon = which(counts == max(counts))
+  return(names(counts)[mostCommon])
+}
