@@ -6,9 +6,9 @@
 #################################################################
 # IMPORTANT
 # Enter your personal information here, between the quotation marks:
-name <- "Run Yu Zhang"
-github.name <- "runyuzhang"
-email.address <- "runyuzhang@berkeley.edu"
+name <- ""
+github.name <- ""
+email.address <- ""
 
 #################################################################
 # The exam has a total of 100 points and for each task 
