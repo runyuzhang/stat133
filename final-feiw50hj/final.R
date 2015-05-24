@@ -385,8 +385,9 @@ NumJackpot <- function(k, B){
 
 # For B = 5000 and each value of k = 10000, 50000, 100000, 500000
 # Plot a histogram of the output from NumJackpot (i.e. four histograms)
-
-numbers = lapply(c(10000, 50000, 100000, 500000), function(k) NumJackpot(k, 500))
+# inga
+#numbers = lapply(c(10000, 50000, 100000, 500000), function(k) NumJackpot(k, 500))
+numbers = lapply(c(100, 500, 1000, 5000), function(k) NumJackpot(k, 100))
 sapply(numbers, hist)
 
 #################################################################
