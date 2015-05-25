@@ -203,10 +203,13 @@ abline(v = 2.1)
 # Please redo the plot, but this time put two plots side by side (hint: before plotting set par(mfrow=...) )
 # The left plot should include only data from 1960, the right one only from 2014.
 par(mfrow=c(1,2))
+# inga : changed 2014 to 2013
 WorldBank1960 = WorldBank[WorldBank$year == 1960,]
-WorldBank2014 = WorldBank[WorldBank$year == 2014,]
-plot(WorldBank1960$fertility.rate, WorldBank1960$life.expectancy, col = WorldBank1960$region, xlab = "Fertility Rate", ylab = "Life Expectancy", pch = ".")
-plot(WorldBank2014$fertility.rate, WorldBank2014$life.expectancy, col = WorldBank2014$region, xlab = "Fertility Rate", ylab = "Life Expectancy", pch = ".")
+WorldBank2013 = WorldBank[WorldBank$year == 2013,]
+plot(WorldBank1960$fertility.rate, WorldBank1960$life.expectancy, col = WorldBank1960$region, 
+     xlab = "Fertility Rate", ylab = "Life Expectancy", pch = ".")
+plot(WorldBank2013$fertility.rate, WorldBank2013$life.expectancy, col = WorldBank2013$region, 
+     xlab = "Fertility Rate", ylab = "Life Expectancy", pch = ".")
 
 # [4 pts]
 # Make a histogram of GDP only for observations where the lending rating is "IDA"
